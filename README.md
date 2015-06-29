@@ -10,7 +10,7 @@ Google Analytics wrapper (gaw) assumes use of the category, action, and label pa
 ```
   
 # Options  
-**Prefix**  
+**prefix**  
 String, prefixes category parameter  
   
 **testMode**  
