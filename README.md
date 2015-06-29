@@ -39,7 +39,7 @@ gaw.register('label', {'action': 'Clicked Product Category'}, function(currentLa
 ```  
   
 # API  
-***gaw.Register(dynamicType, match, fn)***  
+***gaw.register(dynamicType, match, fn)***  
 registers a callback to trigger given the specified event being matched.  
   
   
@@ -49,7 +49,7 @@ match, Object, key is the event parameter type to match & value is the string to
   
 fn, Function, callback function to call when the event is triggered.  
   
-***gaw.Push(category, action, label, element)***  
+***gaw.push(category, action, label, element)***  
 pushes an event to Google Analytics given non-empty params. Element is optional.  
   
   
