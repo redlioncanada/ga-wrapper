@@ -49,7 +49,7 @@ match, Object, key is the event parameter type to match & value is the string to
   
 fn, Function, callback function to call when the event is triggered.  
   
-***gaw.Push(category, action, label, element)*** 
+***gaw.Push(category, action, label, element)***  
 pushes an event to Google Analytics given non-empty params. Element is optional.  
   
   
