@@ -31,7 +31,7 @@ gaw uses a global event listener and inline data attributes to determine if a pu
 ```  
   
 # Dynamic event parameters  
-gaw also supports dynamic parameters via a callback function. The following would intercept any call with an action parameter that equals "Clicked Product Category", and sets the label parameter to the clicked element's text attribute.
+gaw also supports dynamic parameters via a callback function. The following would intercept any call with an `action` parameter that equals "Clicked Product Category", and sets the `label` parameter to the clicked element's text attribute.
 ```
 gaw.register('label', {'action': 'Clicked Product Category'}, function(currentLabel, element, callback) {
   callback($(element).text());
