@@ -5,7 +5,7 @@ Google Analytics wrapper (gaw) assumes use of the category, action, and label pa
 
 # Setup  
 ```
-<script src="/javascript/gaWrapper.js"></script>`  
+<script src="/javascript/gaWrapper.js"></script>  
 <script>var gaw = new GAWrapper({});</script>
 ```
   
@@ -52,11 +52,12 @@ gaw.register('label', {'action': 'Clicked Product Category'}, function(currentLa
 registers a callback to trigger given the specified event being matched.  
   
   
-dynamicType, String, the event parameter to be dynamic.  
+dynamicType, String, the event type to match.  
   
 match, Object, key is the event parameter type to match & value is the string to match it with.  
   
-fn, Function, callback function to call when the event is triggered.  
+fn, Function, callback function to call when the event is triggered. Takes the new event string or false as a parameter. Passing false stops the event from being sent.
+  
   
 ***gaw.push(category, action, label, element)***  
 pushes an event to Google Analytics given non-empty params. Element is optional.  
