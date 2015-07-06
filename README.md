@@ -6,7 +6,7 @@ Google Analytics wrapper (gaw) assumes use of the category, action, and label pa
 # Setup  
 ```
 <script src="/javascript/gaWrapper.js"></script>  
-<script>var gaw = new GAWrapper({});</script>
+<script>var gaw = new GAWrapper();</script>
 ```
   
 # Options  
