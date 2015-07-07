@@ -100,7 +100,7 @@ class gaWrapper {
 	}
 
 	set prefix(v) {
-		this._prefix = v + '-';
+		this._prefix = v ? v + '-' : '';
 	}
 
 	get prefix() {

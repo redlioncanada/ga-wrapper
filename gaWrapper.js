@@ -162,7 +162,7 @@ var gaWrapper = (function () {
 	}, {
 		key: 'prefix',
 		set: function (v) {
-			this._prefix = v + '-';
+			this._prefix = v ? v + '-' : '';
 		},
 		get: function () {
 			return this._prefix;
