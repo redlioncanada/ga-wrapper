@@ -1,6 +1,5 @@
 class gaWrapper {
-	constructor(opts) {
-		if (!opts) {opts = {};}
+	constructor(opts={}) {
 		this.prefix = opts.prefix ? opts.prefix : "";
 		this.testMode = opts.testMode ? opts.testMode : false;
 		this.verbose = opts.verbose ? opts.verbose : false;
@@ -21,7 +20,7 @@ class gaWrapper {
 
 	register(dynamicType, match, fn) {
 		if (typeof match !== 'object') return;
-		if ((!('action' in match) && !('category' in match) && !('label' in match)) || (dynamicType !== 'action' && dynamicType !== 'category' && dynamicType !== 'label')) return;
+		if ((!('action' in match) && !('category' in match) && !('label' in match)) || (dynamicType !== 'action' && dynamicType !== 'category' && dynamicType !== 'label') || typeof fn !== 'function') return;
 		this.events.push({'dynamicType':dynamicType, 'match':match, 'function':fn});
 	}
 
@@ -70,8 +69,8 @@ class gaWrapper {
 		if (!label) {this.log("push event received but label is undefined", 0); return;}
 		if (!label.length) {this.log("push event received but label is of length 0", 0); return;}
 		
-		this.log("pushed event (category: '"+this.prefix+'-'+category+"', action: '"+action+"', label: '"+label+"')");
-		if (!this.testMode) ga('send', 'event', this.prefix+'-'+category, action, label);
+		this.log("pushed event (category: '"+this.prefix+category+"', action: '"+action+"', label: '"+label+"')");
+		if (!this.testMode) ga('send', 'event', this.prefix+category, action, label);
 	}
 
 	_click(e) {
@@ -98,6 +97,14 @@ class gaWrapper {
 			this.log("push event received but ga has not been loaded", 2);
 			return false;
 		}
+	}
+
+	set prefix(v) {
+		this._prefix = v + '-';
+	}
+
+	get prefix() {
+		return this._prefix;
 	}
 
 	log(str,type=1) {
