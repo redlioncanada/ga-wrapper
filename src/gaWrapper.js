@@ -75,9 +75,13 @@ class gaWrapper {
 
 	_click(e) {
 		let target = $(e.target);
-		let category = $(target).closest('*[data-ga-category]');
-		let label = $(target).closest('*[data-ga-label]', category);
-		let action = $(target).closest('*[data-ga-action]', category);
+		let category = hasAttr($(target),'data-ga-category');
+		let label = hasAttr($(target),'data-ga-label');
+		let action = hasAttr($(target),'data-ga-action');
+
+		if (!category) category = $(target).closest('*[data-ga-category]');
+		if (!label) label = $(target).closest('*[data-ga-label]', category);
+		if (!action) action = $(target).closest('*[data-ga-action]', category);
 		if (!label.length) label = category;
 		if (!action.length) action = category
 
@@ -86,6 +90,7 @@ class gaWrapper {
 		category = $(category).attr('data-ga-category');
 
 		this.push(category, action, label, target);
+		function hasAttr(e,a) {a = $(e).attr(a); if (typeof a !== typeof undefined && a !== false) {return a} else {return false;}}
 	}
 
 	checkGALoaded() {

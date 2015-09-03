@@ -15,11 +15,19 @@
 </script>
 </head>
 <body>
-<h1>Inline event</h1>
+<h1>Embedded inline event</h1>
 <div data-ga-category="Featured Models">
   <ul data-ga-action="Clicked Product Category">
-    <li data-ga-label="Example Product"><a href="#">Example 1</a></li>
-    <li data-ga-label="Example Product"><a href="#">Example 2</a></li>
+    <li data-ga-label="Example Product 1"><a href="#">Example 1</a></li>
+    <li data-ga-label="Example Product 2"><a href="#">Example 2</a></li>
+  </ul>
+</div>
+
+<h1>Single element inline event</h1>
+<div>
+  <ul>
+    <li data-ga-category="Featured Models" data-ga-action="Clicked Product Category" data-ga-label="Example Product 1"><a href="#">Example 1</a></li>
+    <li data-ga-category="Featured Models" data-ga-action="Clicked Product Category" data-ga-label="Example Product 2"><a href="#">Example 2</a></li>
   </ul>
 </div>
 
