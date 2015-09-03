@@ -1,0 +1,29 @@
+{
+  "name": "ga-wrapper",
+  "version": "1.0.0",
+  "description": "Google Analytics wrapper, automation via inline attributes and event callbacks.",
+  "main": "gaWrapper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/redlioncanada/ga-wrapper.git"
+  },
+  "keywords": [
+    "google",
+    "analytics"
+  ],
+  "author": "Stephen Poole",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/redlioncanada/ga-wrapper/issues"
+  },
+  "homepage": "https://github.com/redlioncanada/ga-wrapper#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1",
+    "gulp-jshint": "^1.11.2",
+    "gulp-minify": "0.0.5"
+  }
+}

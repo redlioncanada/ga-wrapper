@@ -1,5 +1,5 @@
 class gaWrapper {
-	constructor(opts={}) {
+	constructor(opts={}) { 
 		this.prefix = opts.prefix ? opts.prefix : "";
 		this.testMode = opts.testMode ? opts.testMode : false;
 		this.verbose = opts.verbose ? opts.verbose : false;
