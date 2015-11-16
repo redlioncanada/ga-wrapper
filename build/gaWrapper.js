@@ -15,6 +15,7 @@ var gaWrapper = (function () {
 		this.verbose = opts.verbose ? opts.verbose : false;
 		this.enabled = false;
 		this.events = [];
+		this.bindings = [];
 		if (typeof ga === 'function') this.enabled = true;
 
 		var self = this;
@@ -36,6 +37,12 @@ var gaWrapper = (function () {
 			if (typeof match !== 'object') return;
 			if (!('action' in match) && !('category' in match) && !('label' in match) || dynamicType !== 'action' && dynamicType !== 'category' && dynamicType !== 'label' || typeof fn !== 'function') return;
 			this.events.push({ 'dynamicType': dynamicType, 'match': match, 'function': fn });
+		}
+	}, {
+		key: 'bind',
+		value: function bind(keyword, fn) {
+			if (typeof fn !== 'function') return;
+			this.bindings.push({ 'keyword': keyword, 'function': fn });
 		}
 	}, {
 		key: 'push',
@@ -82,6 +89,10 @@ var gaWrapper = (function () {
 				}
 			}
 
+			category = this._fillBindings(element, category);
+			action = this._fillBindings(element, action);
+			label = this._fillBindings(element, label);
+
 			if (!hasEvent) {
 				this._push(category, action, label);
 			}
@@ -126,9 +137,9 @@ var gaWrapper = (function () {
 			if (!label.length) label = category;
 			if (!action.length) action = category;
 
-			label = $(label).attr('data-ga-label');
-			action = $(action).attr('data-ga-action');
-			category = $(category).attr('data-ga-category');
+			if (typeof label == 'object') label = $(label).attr('data-ga-label');
+			if (typeof action == 'object') action = $(action).attr('data-ga-action');
+			if (typeof category == 'object') category = $(category).attr('data-ga-category');
 
 			this.push(category, action, label, target);
 			function hasAttr(e, a) {
@@ -138,6 +149,25 @@ var gaWrapper = (function () {
 					return false;
 				}
 			}
+		}
+	}, {
+		key: '_fillBindings',
+		value: function _fillBindings(element, str) {
+			if (!str || !element) return false;
+
+			for (var i in this.bindings) {
+				if (str.indexOf('{{' + this.bindings[i].keyword + '}}') > -1) {
+					//matched keyword
+					console.log(this.bindings[i]['function'].call(this, element));
+					str = str.replace('{{' + this.bindings[i].keyword + '}}', this.bindings[i]['function'].call(this, element));
+				}
+			}
+
+			if (str.indexOf('{{') > -1 && str.indexOf('}}') > -1) {
+				this.log('unrecognized binding in ' + str + ', ignoring', 2);
+			}
+
+			return str;
 		}
 	}, {
 		key: 'checkGALoaded',

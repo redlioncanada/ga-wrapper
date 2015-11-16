@@ -12,6 +12,9 @@
 	gaw.register('label', {'action': 'Clicked Dynamic Product Category'}, function(str, element, cb) {
 	    cb($(element).text());
 	});
+  gaw.bind('element-text', function(element) {
+    return $(element).text();
+  });
 </script>
 </head>
 <body>
@@ -26,8 +29,8 @@
 <h1>Single element inline event</h1>
 <div>
   <ul>
-    <li data-ga-category="Featured Models" data-ga-action="Clicked Product Category" data-ga-label="Example Product 1"><a href="#">Example 1</a></li>
-    <li data-ga-category="Featured Models" data-ga-action="Clicked Product Category" data-ga-label="Example Product 2"><a href="#">Example 2</a></li>
+    <li data-ga-category="Featured Models" data-ga-action="Clicked Product Category" data-ga-label="{{test}}"><a href="#">Example 1</a></li>
+    <li data-ga-category="Featured Models" data-ga-action="Clicked Product Category" data-ga-label="{{test}}"><a href="#">Example 2</a></li>
   </ul>
 </div>
 
