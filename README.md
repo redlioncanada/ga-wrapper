@@ -69,6 +69,14 @@ gaw.bind('test', function(element) {
   
   
 # API  
+***gaw.bind(keyword, fn)***  
+registers a binding to replace based on the given function  
+  
+keyword, String, binding name  
+  
+function, Function, logic to replace keyword with  
+  
+  
 ***gaw.register(dynamicType, match, fn)***  
 registers a callback to trigger given the specified event being matched.  
   
