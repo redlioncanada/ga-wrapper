@@ -32,19 +32,19 @@ gaw uses a global event listener and inline data attributes to determine if a pu
 ```  
   
 # Dynamic event parameters  
-gaw also supports dynamic parameters via a callback function. The following would intercept any call with an `action` parameter that equals "Clicked Product Category", and sets the `label` parameter to the clicked element's text attribute.
+gaw also supports dynamic parameters via ga-bind.
 
 ```
 <div data-ga-category="Featured Models">
-  <ul data-ga-action="Clicked Product Category">
-    <li>Example 1</li>
-    <li>Example 2</li>
+  <ul data-ga-action="Clicked Product Category" data-ga-bind-label="{{element-text}}">
+    <li data-ga-label>Example 1</li>
+    <li data-ga-label>Example 2</li>
   </ul>
 </div>
 ```
 ```
-gaw.register('label', {'action': 'Clicked Product Category'}, function(currentLabel, element, callback) {
-  callback($(element).text());
+gaw.bind('element-text', function(element) {
+    return $(element).text();
 });
 ```  
   
@@ -56,13 +56,13 @@ gaw supports bindings using the {{}} syntax. The following would replace {{test}
 ```
 <div data-ga-category="Featured Models">
   <ul data-ga-action="Clicked Product Category">
-    <li data-ga-label="{{test}}">Example 1</li>
-    <li data-ga-label="{{test}}">Example 2</li>
+    <li data-ga-label="{{element-text}}">Example 1</li>
+    <li data-ga-label="{{element-text}}">Example 2</li>
   </ul>
 </div>
 ```
 ```
-gaw.bind('test', function(element) {
+gaw.bind('element-text', function(element) {
     return $(element).text();
 });
 ```  
