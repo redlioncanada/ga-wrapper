@@ -1,5 +1,5 @@
 # ga-wrapper
-Google Analytics wrapper, automation via inline attributes and event callbacks.
+Google Analytics wrapper, automation via inline attributes and bindings.
 
 Google Analytics wrapper (gaw) assumes use of the category, action, and label parameters, and that category is the top-level element in your event naming conventions.  
 
@@ -75,17 +75,6 @@ registers a binding to replace based on the given function
 keyword, String, binding name  
   
 fn, Function, logic to replace keyword with  
-  
-  
-***gaw.register(dynamicType, match, fn)***  
-registers a callback to trigger given the specified event being matched.  
-  
-  
-dynamicType, String, the event type to match.  
-  
-match, Object, key is the event parameter type to match & value is the string to match it with.  
-  
-fn, Function, callback function to call when the event is triggered. Takes the new event string or false as a parameter. Passing false stops the event from being sent.
   
   
 ***gaw.push(category, action, label, element)***  
