@@ -2,6 +2,7 @@
 <head>
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="./build/gaWrapper.js"></script>
+<title>Google Analytics Wrapper</title>
 <script>
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -12,9 +13,12 @@
   gaw.bind('element-text', function(element) {
     return $(element).text();
   });
+  gaw.bind('page-title', function() {
+    return document.title;
+  });
 </script>
 </head>
-<body>
+<body data-ga-category-prefix="{{page-title}}-">
 <h1>Embedded inline event</h1>
 <div data-ga-category="Featured Models">
   <ul data-ga-action="Clicked Product Category">
