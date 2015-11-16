@@ -3,6 +3,8 @@ Google Analytics wrapper, automation via inline attributes and bindings.
 
 Google Analytics wrapper (gaw) assumes use of the category, action, and label parameters, and that category is the top-level element in your event naming conventions.  
 
+gaw will send an event when an element has all 3 parameters defined, whether explicitly from it's own attributes or implicitly from parent attributes.
+
 # Setup  
 ```
 //isogram code here
@@ -31,23 +33,6 @@ gaw uses a global event listener and inline data attributes to determine if a pu
 </div>
 ```  
   
-# Dynamic event parameters  
-gaw also supports dynamic parameters via ga-bind.
-
-```
-<div data-ga-category="Featured Models">
-  <ul data-ga-action="Clicked Product Category" data-ga-bind-label="{{element-text}}">
-    <li data-ga-label>Example 1</li>
-    <li data-ga-label>Example 2</li>
-  </ul>
-</div>
-```
-```
-gaw.bind('element-text', function(element) {
-    return $(element).text();
-});
-```  
-  
   
 # Event parameter bindings
 gaw supports bindings using the {{}} syntax. The following would replace {{test}} with the clicked element's text.
@@ -58,6 +43,24 @@ gaw supports bindings using the {{}} syntax. The following would replace {{test}
   <ul data-ga-action="Clicked Product Category">
     <li data-ga-label="{{element-text}}">Example 1</li>
     <li data-ga-label="{{element-text}}">Example 2</li>
+  </ul>
+</div>
+```
+```
+gaw.bind('element-text', function(element) {
+    return $(element).text();
+});
+```  
+  
+  
+# Dynamic event parameters  
+gaw also supports dynamic parameters via ga-bind.
+
+```
+<div data-ga-category="Featured Models">
+  <ul data-ga-action="Clicked Product Category" data-ga-bind-label="{{element-text}}">
+    <li data-ga-label>Example 1</li>
+    <li data-ga-label>Example 2</li>
   </ul>
 </div>
 ```
