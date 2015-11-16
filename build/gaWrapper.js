@@ -14,7 +14,6 @@ var gaWrapper = (function () {
 		this.testMode = opts.testMode ? opts.testMode : false;
 		this.verbose = opts.verbose ? opts.verbose : false;
 		this.enabled = false;
-		this.events = [];
 		this.bindings = [];
 		if (typeof ga === 'function') this.enabled = true;
 
@@ -22,6 +21,11 @@ var gaWrapper = (function () {
 		$(document).click(function (e) {
 			self._click(e);
 		});
+
+		$(document).ready(function () {
+			self.refresh();
+		});
+
 		this.log('init');
 
 		if (this.testMode) {
@@ -32,23 +36,28 @@ var gaWrapper = (function () {
 	}
 
 	_createClass(gaWrapper, [{
-		key: 'register',
-		value: function register(dynamicType, match, fn) {
-			if (typeof match !== 'object') return;
-			if (!('action' in match) && !('category' in match) && !('label' in match) || dynamicType !== 'action' && dynamicType !== 'category' && dynamicType !== 'label' || typeof fn !== 'function') return;
-			this.events.push({ 'dynamicType': dynamicType, 'match': match, 'function': fn });
-		}
-	}, {
 		key: 'bind',
 		value: function bind(keyword, fn) {
 			if (typeof fn !== 'function') return;
 			this.bindings.push({ 'keyword': keyword, 'function': fn });
 		}
 	}, {
+		key: 'refresh',
+		value: function refresh() {
+			$('*[data-ga-bind-label]').each(function (i, val) {
+				console.log('inserted label');
+				$(val).find('*[data-ga-label]').attr('data-ga-label', $(val).attr('data-ga-bind-label'));
+			});
+			$('*[data-ga-bind-action]').each(function (i, val) {
+				$(val).find('*[data-ga-action]').attr('data-ga-action', $(val).attr('data-ga-bind-action'));
+			});
+			$('*[data-ga-bind-category]').each(function (i, val) {
+				$(val).find('*[data-ga-category]').attr('data-ga-category', $(val).attr('data-ga-bind-category'));
+			});
+		}
+	}, {
 		key: 'push',
 		value: function push(category, action, label) {
-			var _this = this;
-
 			var element = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
 
 			if (!this.checkGALoaded()) return;
@@ -58,44 +67,10 @@ var gaWrapper = (function () {
 				return;
 			}
 
-			var hasEvent = false;
-			for (var i in this.events) {
-				if ('action' in this.events[i].match && action === this.events[i].match.action || 'category' in this.events[i].match && category === this.events[i].match.category || 'label' in this.events[i].match && label === this.events[i].match.label) {
-					(function () {
-						var self = _this;
-						hasEvent = true;
-
-						switch (_this.events[i].dynamicType) {
-							case 'action':
-								_this.events[i]['function'].call(_this, action, element, function (t) {
-									if (t) self._push(category, t, label);
-								});
-								break;
-							case 'category':
-								_this.events[i]['function'].call(_this, category, element, function (t) {
-									if (t) self._push(t, action, label);
-								});
-								break;
-							case 'label':
-								_this.events[i]['function'].call(_this, label, element, function (t) {
-									if (t) self._push(category, action, t);
-								});
-								break;
-							default:
-								self._push(category, action, label);
-								break;
-						}
-					})();
-				}
-			}
-
-			category = this._fillBindings(element, category);
-			action = this._fillBindings(element, action);
-			label = this._fillBindings(element, label);
-
-			if (!hasEvent) {
-				this._push(category, action, label);
-			}
+			category = this._fillBinding(element, category);
+			action = this._fillBinding(element, action);
+			label = this._fillBinding(element, label);
+			this._push(category, action, label);
 		}
 	}, {
 		key: '_push',
@@ -127,9 +102,9 @@ var gaWrapper = (function () {
 		key: '_click',
 		value: function _click(e) {
 			var target = $(e.target);
-			var category = hasAttr($(target), 'data-ga-category');
-			var label = hasAttr($(target), 'data-ga-label');
-			var action = hasAttr($(target), 'data-ga-action');
+			var category = this._hasAttr($(target), 'data-ga-category');
+			var label = this._hasAttr($(target), 'data-ga-label');
+			var action = this._hasAttr($(target), 'data-ga-action');
 
 			if (!category) category = $(target).closest('*[data-ga-category]');
 			if (!label) label = $(target).closest('*[data-ga-label]', category);
@@ -142,17 +117,10 @@ var gaWrapper = (function () {
 			if (typeof category == 'object') category = $(category).attr('data-ga-category');
 
 			this.push(category, action, label, target);
-			function hasAttr(e, a) {
-				a = $(e).attr(a);if (typeof a !== typeof undefined && a !== false) {
-					return a;
-				} else {
-					return false;
-				}
-			}
 		}
 	}, {
-		key: '_fillBindings',
-		value: function _fillBindings(element, str) {
+		key: '_fillBinding',
+		value: function _fillBinding(element, str) {
 			if (!str || !element) return false;
 
 			for (var i in this.bindings) {
@@ -199,6 +167,15 @@ var gaWrapper = (function () {
 			}
 
 			if (this.verbose || type == 2 || type == 0) console.log('gaw ' + type + ': ' + str);
+		}
+	}, {
+		key: '_hasAttr',
+		value: function _hasAttr(e, a) {
+			a = $(e).attr(a);if (typeof a !== typeof undefined && a !== false) {
+				return a;
+			} else {
+				return false;
+			}
 		}
 	}, {
 		key: 'prefix',

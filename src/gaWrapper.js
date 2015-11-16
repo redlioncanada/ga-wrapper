@@ -4,14 +4,18 @@ class gaWrapper {
 		this.testMode = opts.testMode ? opts.testMode : false;
 		this.verbose = opts.verbose ? opts.verbose : false;
 		this.enabled = false;
-		this.events = [];
 		this.bindings = [];
 		if (typeof ga === 'function') this.enabled = true;
 
-		let self = this;
+		var self = this;
 		$(document).click(function(e) {
 			self._click(e);
 		});
+
+		$(document).ready(function() {
+			self.refresh();
+		});
+
 		this.log('init');
 
 		if (this.testMode) {
@@ -19,15 +23,22 @@ class gaWrapper {
 		}
 	}
 
-	register(dynamicType, match, fn) {
-		if (typeof match !== 'object') return;
-		if ((!('action' in match) && !('category' in match) && !('label' in match)) || (dynamicType !== 'action' && dynamicType !== 'category' && dynamicType !== 'label') || typeof fn !== 'function') return;
-		this.events.push({'dynamicType':dynamicType, 'match':match, 'function':fn});
-	}
-
 	bind(keyword, fn) {
 		if (typeof fn !== 'function') return;
 		this.bindings.push({'keyword':keyword,'function':fn});
+	}
+
+	refresh() {
+		$('*[data-ga-bind-label]').each(function(i,val) {
+			console.log('inserted label');
+			$(val).find('*[data-ga-label]').attr('data-ga-label', $(val).attr('data-ga-bind-label'));
+		});
+		$('*[data-ga-bind-action]').each(function(i,val) {
+			$(val).find('*[data-ga-action]').attr('data-ga-action', $(val).attr('data-ga-bind-action'));
+		});
+		$('*[data-ga-bind-category]').each(function(i,val) {
+			$(val).find('*[data-ga-category]').attr('data-ga-category', $(val).attr('data-ga-bind-category'));
+		});
 	}
 
 	push(category, action, label, element=false) {
@@ -38,36 +49,10 @@ class gaWrapper {
 			return;
 		}
 
-		let hasEvent = false;
-		for (var i in this.events) {
-			if (('action' in this.events[i].match && action === this.events[i].match.action) || ('category' in this.events[i].match && category === this.events[i].match.category) || ('label' in this.events[i].match && label === this.events[i].match.label)) {
-				let self = this;
-				hasEvent = true;
-
-				switch (this.events[i].dynamicType) {
-					case 'action':
-						this.events[i].function.call(this, action, element, function(t) {if (t) self._push(category,t,label)});
-						break;
-					case 'category':
-						this.events[i].function.call(this, category, element, function(t) {if (t) self._push(t,action,label)});
-						break;
-					case 'label':
-						this.events[i].function.call(this, label, element, function(t) {if (t) self._push(category,action,t)});
-						break;
-					default:
-						self._push(category,action,label);
-						break;
-				}
-			}
-		}
-
-		category = this._fillBindings(element,category);
-		action = this._fillBindings(element,action);
-		label = this._fillBindings(element,label);
-
-		if (!hasEvent) {
-			this._push(category, action, label);
-		}
+		category = this._fillBinding(element,category);
+		action = this._fillBinding(element,action);
+		label = this._fillBinding(element,label);
+		this._push(category, action, label);
 	}
 
 	_push(category, action, label) {
@@ -85,9 +70,9 @@ class gaWrapper {
 
 	_click(e) {
 		let target = $(e.target);
-		let category = hasAttr($(target),'data-ga-category');
-		let label = hasAttr($(target),'data-ga-label');
-		let action = hasAttr($(target),'data-ga-action');
+		let category = this._hasAttr($(target),'data-ga-category');
+		let label = this._hasAttr($(target),'data-ga-label');
+		let action = this._hasAttr($(target),'data-ga-action');
 
 		if (!category) category = $(target).closest('*[data-ga-category]');
 		if (!label) label = $(target).closest('*[data-ga-label]', category);
@@ -100,10 +85,9 @@ class gaWrapper {
 		if (typeof category == 'object') category = $(category).attr('data-ga-category');
 
 		this.push(category, action, label, target);
-		function hasAttr(e,a) {a = $(e).attr(a); if (typeof a !== typeof undefined && a !== false) {return a} else {return false;}}
 	}
 
-	_fillBindings(element,str) {
+	_fillBinding(element,str) {
 		if (!str || !element) return false;
 
 		for (var i in this.bindings) {
@@ -154,5 +138,9 @@ class gaWrapper {
 		}
 
 		if (this.verbose || type == 2 || type == 0) console.log(`gaw ${type}: ${str}`);
+	}
+
+	_hasAttr(e,a) {
+		a = $(e).attr(a); if (typeof a !== typeof undefined && a !== false) {return a} else {return false;}
 	}
 }

@@ -7,11 +7,8 @@
 	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
+  
 	var gaw = new gaWrapper({prefix:'Test', testMode: true, verbose: true});
-	gaw.register('label', {'action': 'Clicked Dynamic Product Category'}, function(str, element, cb) {
-	    cb($(element).text());
-	});
   gaw.bind('element-text', function(element) {
     return $(element).text();
   });
@@ -21,24 +18,24 @@
 <h1>Embedded inline event</h1>
 <div data-ga-category="Featured Models">
   <ul data-ga-action="Clicked Product Category">
-    <li data-ga-label="Example Product 1"><a href="#">Example 1</a></li>
-    <li data-ga-label="Example Product 2"><a href="#">Example 2</a></li>
+    <li data-ga-label="Example 1"><a href="#">Example 1</a></li>
+    <li data-ga-label="Example 2"><a href="#">Example 2</a></li>
   </ul>
 </div>
 
 <h1>Single element inline event</h1>
 <div>
   <ul>
-    <li data-ga-category="Featured Models" data-ga-action="Clicked Product Category" data-ga-label="{{test}}"><a href="#">Example 1</a></li>
-    <li data-ga-category="Featured Models" data-ga-action="Clicked Product Category" data-ga-label="{{test}}"><a href="#">Example 2</a></li>
+    <li data-ga-category="Featured Models" data-ga-action="Clicked Product Category" data-ga-label="{{element-text}}"><a href="#">Example 1</a></li>
+    <li data-ga-category="Featured Models" data-ga-action="Clicked Product Category" data-ga-label="{{element-text}}"><a href="#">Example 2</a></li>
   </ul>
 </div>
 
 <h1>Dynamic label event</h1>
 <div data-ga-category="Featured Models">
-  <ul data-ga-action="Clicked Dynamic Product Category">
-    <li><a href="#">Example 1</a></li>
-    <li><a href="#">Example 2</a></li>
+  <ul data-ga-action="Clicked Dynamic Product Category" data-ga-bind-label="{{element-text}}">
+    <li data-ga-label><a href="#">Example 1</a></li>
+    <li data-ga-label><a href="#">Example 2</a></li>
   </ul>
 </div>
 </body>
