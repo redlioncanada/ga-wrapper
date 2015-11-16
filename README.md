@@ -48,7 +48,35 @@ gaw.register('label', {'action': 'Clicked Product Category'}, function(currentLa
 });
 ```  
   
+  
+# Event parameter bindings
+gaw supports bindings using the {{}} syntax. The following would replace {{test}} with the clicked element's text.
+  
+
+```
+<div data-ga-category="Featured Models">
+  <ul data-ga-action="Clicked Product Category">
+    <li data-ga-label="{{test}}">Example 1</li>
+    <li data-ga-label="{{test}}">Example 2</li>
+  </ul>
+</div>
+```
+```
+gaw.bind('test', function(element) {
+    return $(element).text();
+});
+```  
+  
+  
 # API  
+***gaw.bind(keyword, fn)***  
+registers a binding to replace based on the given function  
+  
+keyword, String, binding name  
+  
+fn, Function, logic to replace keyword with  
+  
+  
 ***gaw.register(dynamicType, match, fn)***  
 registers a callback to trigger given the specified event being matched.  
   
