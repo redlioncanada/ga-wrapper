@@ -1,6 +1,6 @@
 {
   "name": "ga-wrapper",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Google Analytics wrapper, automation via inline attributes and event callbacks.",
   "main": "gaWrapper.js",
   "scripts": {
