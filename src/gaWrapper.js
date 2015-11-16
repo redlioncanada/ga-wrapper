@@ -30,14 +30,25 @@ class gaWrapper {
 
 	refresh() {
 		$('*[data-ga-bind-label]').each(function(i,val) {
-			console.log('inserted label');
-			$(val).find('*[data-ga-label]').attr('data-ga-label', $(val).attr('data-ga-bind-label'));
+			$(val).find('*[data-ga-label]').each(function(j,val1) {
+				if (!$(val1).attr('data-ga-label').length) {
+					$(val1).attr('data-ga-label', $(val).attr('data-ga-bind-label'));
+				}
+			});
 		});
 		$('*[data-ga-bind-action]').each(function(i,val) {
-			$(val).find('*[data-ga-action]').attr('data-ga-action', $(val).attr('data-ga-bind-action'));
+			$(val).find('*[data-ga-action]').each(function(j,val1) {
+				if (!$(val1).attr('data-ga-action').length) {
+					$(val1).attr('data-ga-action', $(val).attr('data-ga-bind-action'));
+				}
+			});
 		});
 		$('*[data-ga-bind-category]').each(function(i,val) {
-			$(val).find('*[data-ga-category]').attr('data-ga-category', $(val).attr('data-ga-bind-category'));
+			$(val).find('*[data-ga-category]').each(function(j,val1) {
+				if (!$(val1).attr('data-ga-category').length) {
+					$(val1).attr('data-ga-category', $(val).attr('data-ga-bind-category'));
+				}
+			});
 		});
 	}
 
