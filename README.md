@@ -74,7 +74,7 @@ registers a binding to replace based on the given function
   
 keyword, String, binding name  
   
-function, Function, logic to replace keyword with  
+fn, Function, logic to replace keyword with  
   
   
 ***gaw.register(dynamicType, match, fn)***  
