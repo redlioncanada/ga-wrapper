@@ -43,24 +43,24 @@ var gaWrapper = (function () {
 	}, {
 		key: 'refresh',
 		value: function refresh() {
-			$('*[$ga-bind-label]').each(function (i, val) {
-				$(val).find('*[$ga-label]').each(function (j, val1) {
-					if (!$(val1).attr('$ga-label').length) {
-						$(val1).attr('$ga-label', $(val).attr('$ga-bind-label'));
+			$('*[data-ga-bind-label]').each(function (i, val) {
+				$(val).find('*[data-ga-label]').each(function (j, val1) {
+					if (!$(val1).attr('data-ga-label').length) {
+						$(val1).attr('data-ga-label', $(val).attr('data-ga-bind-label'));
 					}
 				});
 			});
-			$('*[$ga-bind-action]').each(function (i, val) {
-				$(val).find('*[$ga-action]').each(function (j, val1) {
-					if (!$(val1).attr('$ga-action').length) {
-						$(val1).attr('$ga-action', $(val).attr('$ga-bind-action'));
+			$('*[data-ga-bind-action]').each(function (i, val) {
+				$(val).find('*[data-ga-action]').each(function (j, val1) {
+					if (!$(val1).attr('data-ga-action').length) {
+						$(val1).attr('data-ga-action', $(val).attr('data-ga-bind-action'));
 					}
 				});
 			});
-			$('*[$ga-bind-category]').each(function (i, val) {
-				$(val).find('*[$ga-category]').each(function (j, val1) {
-					if (!$(val1).attr('$ga-category').length) {
-						$(val1).attr('$ga-category', $(val).attr('$ga-bind-category'));
+			$('*[data-ga-bind-category]').each(function (i, val) {
+				$(val).find('*[data-ga-category]').each(function (j, val1) {
+					if (!$(val1).attr('data-ga-category').length) {
+						$(val1).attr('data-ga-category', $(val).attr('data-ga-bind-category'));
 					}
 				});
 			});
@@ -119,32 +119,32 @@ var gaWrapper = (function () {
 		key: '_click',
 		value: function _click(e) {
 			var target = $(e.target);
-			var category = this._hasAttr($(target), '$ga-category');
-			var label = this._hasAttr($(target), '$ga-label');
-			var action = this._hasAttr($(target), '$ga-action');
+			var category = this._hasAttr($(target), 'data-ga-category');
+			var label = this._hasAttr($(target), 'data-ga-label');
+			var action = this._hasAttr($(target), 'data-ga-action');
 
-			var categoryPrefix = this._hasAttr($(target), '$ga-category-prefix');
-			var labelPrefix = this._hasAttr($(target), '$ga-label-prefix');
-			var actionPrefix = this._hasAttr($(target), '$ga-action-prefix');
+			var categoryPrefix = this._hasAttr($(target), 'data-ga-category-prefix');
+			var labelPrefix = this._hasAttr($(target), 'data-ga-label-prefix');
+			var actionPrefix = this._hasAttr($(target), 'data-ga-action-prefix');
 
-			if (!category) category = $(target).closest('*[$ga-category]');
-			if (!label) label = $(target).closest('*[$ga-label]', category);
-			if (!action) action = $(target).closest('*[$ga-action]', category);
-			if (!categoryPrefix) categoryPrefix = $(target).closest('*[$ga-category-prefix]');
-			if (!labelPrefix) labelPrefix = $(target).closest('*[$ga-label-prefix]');
-			if (!actionPrefix) actionPrefix = $(target).closest('*[$ga-action-prefix]');
+			if (!category) category = $(target).closest('*[data-ga-category]');
+			if (!label) label = $(target).closest('*[data-ga-label]', category);
+			if (!action) action = $(target).closest('*[data-ga-action]', category);
+			if (!categoryPrefix) categoryPrefix = $(target).closest('*[data-ga-category-prefix]');
+			if (!labelPrefix) labelPrefix = $(target).closest('*[data-ga-label-prefix]');
+			if (!actionPrefix) actionPrefix = $(target).closest('*[data-ga-action-prefix]');
 			if (!label.length) label = category;
 			if (!action.length) action = category;
 			if (!categoryPrefix.length) categoryPrefix = '';
 			if (!labelPrefix.length) labelPrefix = '';
 			if (!actionPrefix.length) actionPrefix = '';
 
-			if (typeof label == 'object') label = $(label).attr('$ga-label');
-			if (typeof action == 'object') action = $(action).attr('$ga-action');
-			if (typeof category == 'object') category = $(category).attr('$ga-category');
-			if (typeof labelPrefix == 'object') labelPrefix = $(labelPrefix).attr('$ga-label-prefix');
-			if (typeof actionPrefix == 'object') actionPrefix = $(actionPrefix).attr('$ga-action-prefix');
-			if (typeof categoryPrefix == 'object') categoryPrefix = $(categoryPrefix).attr('$ga-category-prefix');
+			if (typeof label == 'object') label = $(label).attr('data-ga-label');
+			if (typeof action == 'object') action = $(action).attr('data-ga-action');
+			if (typeof category == 'object') category = $(category).attr('data-ga-category');
+			if (typeof labelPrefix == 'object') labelPrefix = $(labelPrefix).attr('data-ga-label-prefix');
+			if (typeof actionPrefix == 'object') actionPrefix = $(actionPrefix).attr('data-ga-action-prefix');
+			if (typeof categoryPrefix == 'object') categoryPrefix = $(categoryPrefix).attr('data-ga-category-prefix');
 
 			var props = {
 				label: label,
