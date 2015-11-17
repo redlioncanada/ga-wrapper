@@ -18,7 +18,7 @@
   });
 </script>
 </head>
-<body data-ga-category-prefix="{{page-title}}-">
+<body data-ga-category-prefix="@page-title-">
 <h1>Embedded inline event</h1>
 <div data-ga-category="Featured Models">
   <ul data-ga-action="Clicked Product Category">
@@ -30,17 +30,17 @@
 <h1>Single element inline event</h1>
 <div>
   <ul>
-    <li data-ga-category="Featured Models" data-ga-action="Clicked Product Category" data-ga-label="{{element-text}}"><a href="#">Example 1</a></li>
-    <li data-ga-category="Featured Models" data-ga-action="Clicked Product Category" data-ga-label="{{element-text}}"><a href="#">Example 2</a></li>
+    <li data-ga-category="Featured Models" data-ga-action="Clicked Product Category" data-ga-label="@element-text"><a href="#">Example 1</a></li>
+    <li data-ga-category="Featured Models" data-ga-action="Clicked Product Category" data-ga-label="@element-text"><a href="#">Example 2</a></li>
   </ul>
 </div>
 
 <h1>Dynamic label event</h1>
 <div data-ga-category="Featured Models">
-  <ul data-ga-action="Clicked Dynamic Product Category" data-ga-bind-label="{{element-text}}">
+  <ul data-ga-action="Clicked Dynamic Product Category" data-ga-bind-label="@element-text">
     <li data-ga-label><a href="#">Example 1</a></li>
     <li data-ga-label><a href="#">Example 2</a></li>
-    <li data-ga-label="{{element-text}} custom"><a href="#">Example 3</a></li>
+    <li data-ga-label="@element-text custom"><a href="#">Example 3</a></li>
   </ul>
 </div>
 </body>
