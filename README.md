@@ -13,9 +13,6 @@ gaw will send an event when an element has all 3 parameters defined, whether exp
 ```
   
 # Options  
-**prefix**  
-String, prefixes category parameter  
-  
 **testMode**  
 Boolean, disables push to analytics, disables link click navigation  
   
