@@ -137,7 +137,7 @@ class gaWrapper {
 				//matched keyword
 				var replace = this.bindings[i]['function'].call(this,element);
 				if (replace) str = str.replace(`@${this.bindings[i].keyword}`, replace);
-				else this.log(`${str} binding returned a string of length 0`,0);
+				else this.log(`${str} bind callback returned an empty string`,0);
 			}
 		}
 
