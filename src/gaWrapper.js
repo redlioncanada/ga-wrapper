@@ -130,15 +130,15 @@ class gaWrapper {
 		if (!str || typeof str === 'undefined' || !str.length) return false;
 
 		for (var i in this.bindings) {
-			if (str.indexOf(`{{${this.bindings[i].keyword}}}`) > -1) {
+			if (str.indexOf(`@${this.bindings[i].keyword}`) > -1) {
 				//matched keyword
 				var replace = this.bindings[i]['function'].call(this,element);
-				if (replace) str = str.replace(`{{${this.bindings[i].keyword}}}`, replace);
+				if (replace) str = str.replace(`@${this.bindings[i].keyword}`, replace);
 				else this.log(`${str} binding returned a string of length 0`,0);
 			}
 		}
 
-		if (str.indexOf('{{') > -1 && str.indexOf('}}') > -1) {
+		if (str.indexOf('@') > -1) {
 			this.log(`unrecognized binding in ${str}, ignoring`,2);
 		}
 
