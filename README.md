@@ -35,7 +35,7 @@ gaw uses a global event listener and inline data attributes to determine if a pu
   
   
 # Event parameter bindings
-gaw supports bindings using the @ syntax. The following would replace @test with the clicked element's text.
+gaw supports bindings using the @ syntax. The following would replace @element-text with the clicked element's text.
   
 
 ```
