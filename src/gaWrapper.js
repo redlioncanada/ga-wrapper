@@ -18,7 +18,10 @@ class gaWrapper {
 		this.log('init');
 
 		if (this.testMode) {
-			$('a').click(function(e) {e.preventDefault();})
+			$('a').attr('href','#');
+			$('*').on('click', function(e) {
+				e.preventDefault();
+			});
 		}
 	}
 
