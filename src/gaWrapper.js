@@ -140,6 +140,7 @@ class gaWrapper {
 
 		if (str.indexOf('@') > -1) {
 			this.log(`unrecognized binding in ${str}, ignoring`,2);
+			return false;
 		}
 
 		return str;
