@@ -15,7 +15,7 @@
     "analytics"
   ],
   "author": "Stephen Poole",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/redlioncanada/ga-wrapper/issues"
   },
@@ -25,5 +25,11 @@
     "gulp-babel": "^5.2.1",
     "gulp-jshint": "^1.11.2",
     "gulp-minify": "0.0.5"
+  },
+  "dependencies": {
+    "gulp-minify": "^0.0.5",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1",
+    "gulp-jshint": "^1.11.2"
   }
 }
