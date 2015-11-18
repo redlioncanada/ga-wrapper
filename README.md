@@ -9,7 +9,7 @@ gaw will send an event when an element has all 3 parameters defined, whether exp
 ```
 //isogram code here
 <script src="/javascript/gaWrapper.js"></script>  
-<script>var gaw = new GAWrapper();</script>
+<script>var gaw = new gaWrapper();</script>
 ```
   
 # Options  
