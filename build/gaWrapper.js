@@ -21,6 +21,10 @@ var gaWrapper = (function () {
 			self._click(e);
 		});
 
+		$(document).on('touchstart', function (e) {
+			self._click(e);
+		});
+
 		$(document).ready(function () {
 			self.refresh();
 		});
@@ -110,8 +114,8 @@ var gaWrapper = (function () {
 			}
 
 			props.category = props.categoryPrefix ? props.categoryPrefix + props.category : props.category;
-			props.action = props.actionPrefix ? props.actionPrefix + action : props.action;
-			props.label = props.labelPrefix ? props.labelPrefix + label : props.label;
+			props.action = props.actionPrefix ? props.actionPrefix + props.action : props.action;
+			props.label = props.labelPrefix ? props.labelPrefix + props.label : props.label;
 
 			this.log("pushed event (category: '" + props.category + "', action: '" + props.action + "', label: '" + props.label + "')");
 			if (!this.testMode) ga('send', 'event', props.category, props.action, props.label);

@@ -11,6 +11,10 @@ class gaWrapper {
 			self._click(e);
 		});
 
+		$(document).on('touchstart',function(e) {
+			self._click(e);
+		});
+
 		$(document).ready(function() {
 			self.refresh();
 		});
@@ -81,8 +85,8 @@ class gaWrapper {
 		if (!props.label.length) {this.log("push event received but label is of length 0", 0); return;}
 		
 		props.category = props.categoryPrefix ? props.categoryPrefix+props.category : props.category;
-		props.action = props.actionPrefix ? props.actionPrefix+action : props.action;
-		props.label = props.labelPrefix ? props.labelPrefix+label : props.label;
+		props.action = props.actionPrefix ? props.actionPrefix+props.action : props.action;
+		props.label = props.labelPrefix ? props.labelPrefix+props.label : props.label;
 
 		this.log("pushed event (category: '"+props.category+"', action: '"+props.action+"', label: '"+props.label+"')");
 		if (!this.testMode) ga('send', 'event', props.category, props.action, props.label);
