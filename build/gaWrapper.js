@@ -35,6 +35,7 @@ var gaWrapper = (function () {
 			$('a').attr('href', '#');
 			$('*').on('click', function (e) {
 				e.preventDefault();
+				self.log('clicked on ' + e.target);
 			});
 		}
 	}
