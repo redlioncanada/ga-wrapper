@@ -76,6 +76,9 @@ keyword, String, binding name
   
 fn, Function, logic to replace keyword with  
   
+***gaw.refresh()***  
+refreshes all binds. Useful when elements are added after page load. 
+  
   
 ***gaw.push(category, action, label, element)***  
 pushes an event to Google Analytics given non-empty params. Element is optional.  
