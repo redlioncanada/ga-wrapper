@@ -84,11 +84,17 @@ var gaWrapper = (function () {
 			}
 
 			props.category = this._fillBinding(props.category, element);
+			if (!props.category) props.category = undefined;
 			props.action = this._fillBinding(props.action, element);
+			if (!props.action) props.action = undefined;
 			props.label = this._fillBinding(props.label, element);
+			if (!props.label) props.label = undefined;
 			props.categoryPrefix = this._fillBinding(props.categoryPrefix);
+			if (!props.categoryPrefix) props.categoryPrefix = undefined;
 			props.actionPrefix = this._fillBinding(props.actionPrefix);
+			if (!props.actionPrefix) props.actionPrefix = undefined;
 			props.labelPrefix = this._fillBinding(props.labelPrefix);
+			if (!props.labelPrefix) props.labelPrefix = undefined;
 			this._push(props);
 		}
 	}, {
@@ -173,7 +179,7 @@ var gaWrapper = (function () {
 					//matched keyword
 					var replace = this.bindings[i]['function'].call(this, element);
 					str = str.replace('@' + this.bindings[i].keyword, replace);
-					if (!replace) this.log(str + ' bind callback returned an empty string');
+					if (!replace) this.log(this.bindings[i].keyword + ' bind callback returned an empty string');
 				}
 			}
 
