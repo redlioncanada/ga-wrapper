@@ -68,10 +68,10 @@ gaw.bind('element-text', function(element) {
 ```  
   
 # Parameter prefixes
-Global prefixes for each parameter can be declared on parent elements. The following would prefix all `category` parameters within the div the attribute is declared upon.
+Global prefixes for each parameter can be declared on parent elements. The following would prefix all `category` parameters within the div the attribute is declared upon. This is especially useful when combined with bindings.
   
 ```
-<div data-ga-category-prefix="language-">
+<div data-ga-category-prefix="language-" data-ga-category="Example Category">
   <ul data-ga-action="Clicked Product Category">
     <li data-ga-label="Example 1">Example 1</li>
     <li data-ga-label="Example 2">Example 2</li>
