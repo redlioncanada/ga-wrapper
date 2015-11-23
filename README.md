@@ -3,7 +3,7 @@ Google Analytics wrapper, automation via inline attributes and bindings.
 
 Google Analytics wrapper (gaw) assumes use of the category, action, and label parameters, and that category is the top-level element in your event naming conventions. Gaw will send an event when an element has all 3 parameters defined, whether explicitly from it's own attributes or implicitly from parent attributes.
 
-Check out the [example page](http://redlioncanada.github.io/ga-wrapper/).
+Check out the [example page](http://redlioncanada.github.io/ga-wrapper/) with the console open.
 
 # Setup  
 ```
