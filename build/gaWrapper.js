@@ -98,6 +98,11 @@ var gaWrapper = (function () {
 			this._push(props);
 		}
 	}, {
+		key: 'trigger',
+		value: function trigger(element) {
+			$(element).click();
+		}
+	}, {
 		key: '_push',
 		value: function _push(props) {
 			if (!this.checkGALoaded()) return;

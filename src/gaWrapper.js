@@ -82,6 +82,10 @@ class gaWrapper {
 		this._push(props);
 	}
 
+	trigger(element) {
+		$(element).click();
+	}
+
 	_push(props) {
 		if (!this.checkGALoaded()) return;
 		if (!props.category) {this.log("push event received but category is undefined", 0); return;}
