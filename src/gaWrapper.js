@@ -25,7 +25,7 @@ class gaWrapper {
 			$('a').attr('href','#');
 			$('*').on('click', function(e) {
 				e.preventDefault();
-				self.log(`clicked on ${e.target}`);
+				self.log(`clicked on ${e.target} with classes ${$(e.target).attr('class')}`);
 			});
 		}
 	}
