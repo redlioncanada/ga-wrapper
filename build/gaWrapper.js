@@ -202,7 +202,7 @@ var gaWrapper = (function () {
 		value: function _objHasEmptyValue(obj, ignore) {
 			var cont = false;
 			for (var i in obj) {
-				if (typeof ignore == 'array') {
+				if (typeof ignore == 'object') {
 					for (var j in ignore) {
 						if (ignore[j] == i) {
 							cont = true;break;

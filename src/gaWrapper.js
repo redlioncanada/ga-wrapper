@@ -171,7 +171,7 @@ class gaWrapper {
 	_objHasEmptyValue(obj,ignore) {
 		let cont = false;
 		for (var i in obj) {
-			if (typeof ignore == 'array') {
+			if (typeof ignore == 'object') {
 				for (var j in ignore) {
 					if (ignore[j] == i) {cont = true; break;}
 				}
