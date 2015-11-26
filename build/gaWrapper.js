@@ -20,6 +20,7 @@ var gaWrapper = (function () {
 
 		$(document).on('touchstart click', function (e) {
 			e.stopPropagation();
+			e.preventDefault();
 			self._click(e);
 		});
 
