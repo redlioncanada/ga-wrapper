@@ -17,11 +17,9 @@ var gaWrapper = (function () {
 		if (typeof ga === 'function') this.enabled = true;
 
 		var self = this;
-		$(document).click(function (e) {
-			self._click(e);
-		});
 
-		$(document).on('touchstart', function (e) {
+		$(document).on('touchstart click', function (e) {
+			e.stopPropagation();
 			self._click(e);
 		});
 
@@ -35,7 +33,7 @@ var gaWrapper = (function () {
 			$('a').attr('href', '#');
 			$('*').on('click', function (e) {
 				e.preventDefault();
-				self.log('clicked on ' + e.target);
+				self.log('clicked on ' + e.target + ' with classes ' + $(e.target).attr('class'));
 			});
 		}
 	}
