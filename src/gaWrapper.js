@@ -66,33 +66,13 @@ class gaWrapper {
 			return;
 		}
 
-		props.category = this._fillBinding(props.category,element);
-		if (!props.category) props.category = undefined;
-		props.action = this._fillBinding(props.action,element);
-		if (!props.action) props.action = undefined;
-		props.label = this._fillBinding(props.label,element);
-		if (!props.label) props.label = undefined;
-		props.categoryPrefix = this._fillBinding(props.categoryPrefix);
-		if (!props.categoryPrefix) props.categoryPrefix = undefined;
-		props.actionPrefix = this._fillBinding(props.actionPrefix);
-		if (!props.actionPrefix) props.actionPrefix = undefined;
-		props.labelPrefix = this._fillBinding(props.labelPrefix);
-		if (!props.labelPrefix) props.labelPrefix = undefined;
-		this._push(props);
-	}
+		for (var i in props) {
+			props[i] = this._fillBinding(props[i],element);
+			if (!props[i]) props[i] = undefined;
+		}
 
-	trigger(element) {
-		$(element).click();
-	}
-
-	_push(props) {
-		if (!this.checkGALoaded()) return;
-		if (!props.category) {this.log("push event received but category is undefined", 0); return;}
-		if (!props.category.length) {this.log("push event received but category is of length 0", 0); return;}
-		if (!props.action) {this.log("push event received but action is undefined", 0); return;}
-		if (!props.action.length) {this.log("push event received but action is of length 0", 0); return;}
-		if (!props.label) {this.log("push event received but label is undefined", 0); return;}
-		if (!props.label.length) {this.log("push event received but label is of length 0", 0); return;}
+		let propsCheck = this._objHasEmptyValue(props,['labelPrefix','categoryPrefix','actionPrefix']);
+		if (propsCheck) {this.log(`push event received but ${propsCheck} is undefined`, 0); return;}
 		
 		props.category = props.categoryPrefix ? props.categoryPrefix+props.category : props.category;
 		props.action = props.actionPrefix ? props.actionPrefix+props.action : props.action;
@@ -102,45 +82,39 @@ class gaWrapper {
 		if (!this.testMode) ga('send', 'event', props.category, props.action, props.label);
 	}
 
+	trigger(element) {
+		$(element).click();
+	}
+
 	_click(e) {
+		let self = this;
 		let target = $(e.target);
-		let category = this._hasAttr($(target),'data-ga-category');
-		let label = this._hasAttr($(target),'data-ga-label');
-		let action = this._hasAttr($(target),'data-ga-action');
-
-		let categoryPrefix = this._hasAttr($(target),'data-ga-category-prefix');
-		let labelPrefix = this._hasAttr($(target),'data-ga-label-prefix');
-		let actionPrefix = this._hasAttr($(target),'data-ga-action-prefix');
-
-		if (!category) category = $(target).closest('*[data-ga-category]');
-		if (!label) label = $(target).closest('*[data-ga-label]', category);
-		if (!action) action = $(target).closest('*[data-ga-action]', category);
-		if (!categoryPrefix) categoryPrefix = $(target).closest('*[data-ga-category-prefix]');
-		if (!labelPrefix) labelPrefix = $(target).closest('*[data-ga-label-prefix]');
-		if (!actionPrefix) actionPrefix = $(target).closest('*[data-ga-action-prefix]');
-		if (!label.length) label = category;
-		if (!action.length) action = category;
-		if (!categoryPrefix.length) categoryPrefix = '';
-		if (!labelPrefix.length) labelPrefix = '';
-		if (!actionPrefix.length) actionPrefix = '';
-
-		if (typeof label == 'object') label = $(label).attr('data-ga-label');
-		if (typeof action == 'object') action = $(action).attr('data-ga-action');
-		if (typeof category == 'object') category = $(category).attr('data-ga-category');
-		if (typeof labelPrefix == 'object') labelPrefix = $(labelPrefix).attr('data-ga-label-prefix');
-		if (typeof actionPrefix == 'object') actionPrefix = $(actionPrefix).attr('data-ga-action-prefix');
-		if (typeof categoryPrefix == 'object') categoryPrefix = $(categoryPrefix).attr('data-ga-category-prefix');
-
-		var props = {
-			label: label,
-			action: action,
+		let category = getProp('category',target);
+		this.push({
+			label: getProp('label',target,category),
+			action: getProp('action',target,category),
 			category: category,
-			labelPrefix: labelPrefix,
-			actionPrefix: actionPrefix,
-			categoryPrefix: categoryPrefix
-		}
+			labelPrefix: getProp('label-prefix',target),
+			actionPrefix: getProp('action-prefix',target),
+			categoryPrefix: getProp('category-prefix',target)
+		}, target);
 
-		this.push(props, target);
+		function getProp(name,target,restrictTo) {
+			let prop = `data-ga-${name}`;
+			let ret = self._hasAttr($(target),prop);
+			if (!ret) {
+				if (typeof restrictTo !== 'undefined') {
+					ret = $(target).closest(`*[${prop}]`);
+				} else {
+					ret = $(target).closest(`*[${prop}]`,restrictTo);
+				}
+			}
+			if (typeof restrictTo !== 'undefined' && !ret.length) {
+				ret = restrictTo;
+			}
+			if (typeof ret === 'object') ret = $(ret).attr(prop);
+			return ret;
+		}
 	}
 
 	_fillBinding(str,element) {
@@ -191,6 +165,22 @@ class gaWrapper {
 	}
 
 	_hasAttr(e,a) {
-		a = $(e).attr(a); if (typeof a !== typeof undefined && a !== false) {return a} else {return false;}
+		a = $(e).attr(a); if (typeof a !== typeof undefined && a !== false && a.length) {return a} else {return false;}
+	}
+
+	_objHasEmptyValue(obj,ignore) {
+		let cont = false;
+		for (var i in obj) {
+			if (typeof ignore == 'array') {
+				for (var j in ignore) {
+					if (ignore[j] == i) {cont = true; break;}
+				}
+			}
+			if (cont) {cont = false; continue;}
+			if (typeof obj[i] === 'undefined' || !obj[i].length) {
+				return i;
+			}
+		}
+		return false;
 	}
 }
