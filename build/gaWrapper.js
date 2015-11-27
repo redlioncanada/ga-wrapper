@@ -13,15 +13,20 @@ var gaWrapper = (function () {
 		this.testMode = opts.testMode ? opts.testMode : false;
 		this.verbose = opts.verbose ? opts.verbose : false;
 		this.enabled = false;
+		this.clicked = false;
 		this.bindings = [];
 		if (typeof ga === 'function') this.enabled = true;
 
 		var self = this;
 
 		$(document).on('touchstart click', function (e) {
-			e.stopPropagation();
-			e.preventDefault();
-			self._click(e);
+			if (!this.clicked) {
+				this.clicked = true;
+				setTimeout(function () {
+					this.clicked = false;
+				}, 100);
+				self._click(e);
+			}
 		});
 
 		$(document).ready(function () {
