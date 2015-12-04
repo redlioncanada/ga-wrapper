@@ -23,7 +23,7 @@ var gaWrapper = (function () {
 			if (!this.clicked) {
 				this.clicked = true;
 				setTimeout(function () {
-					this.clicked = false;
+					self.clicked = false;
 				}, 100);
 				self._click(e);
 			}
