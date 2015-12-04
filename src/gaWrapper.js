@@ -10,8 +10,8 @@ class gaWrapper {
 		var self = this;
 
 		$(document).on('touchstart click', function (e) {
-			if (!this.clicked) {
-				this.clicked = true;
+			if (!self.clicked) {
+				self.clicked = true;
 				setTimeout(function(){
 					self.clicked = false;
 				},100);
