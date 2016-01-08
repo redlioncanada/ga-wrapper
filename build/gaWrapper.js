@@ -10,8 +10,8 @@ var gaWrapper = (function () {
 
 		_classCallCheck(this, gaWrapper);
 
-		this.testMode = opts.testMode ? opts.testMode : false;
-		this.verbose = opts.verbose ? opts.verbose : false;
+		this._testMode = opts.testMode ? opts.testMode : false;
+		this._verbose = opts.verbose ? opts.verbose : false;
 		this.enabled = false;
 		this.clicked = false;
 		this.bindings = [];
@@ -35,12 +35,8 @@ var gaWrapper = (function () {
 
 		this.log('init');
 
-		if (this.testMode) {
-			$('a').attr('href', '#');
-			$('*').on('click', function (e) {
-				e.preventDefault();
-				self.log('clicked on ' + e.target + ' with classes ' + $(e.target).attr('class'));
-			});
+		if (this._testMode) {
+			this.testMode(true);
 		}
 	}
 
@@ -102,7 +98,7 @@ var gaWrapper = (function () {
 			props.label = props.labelPrefix ? props.labelPrefix + props.label : props.label;
 
 			this.log("pushed event (category: '" + props.category + "', action: '" + props.action + "', label: '" + props.label + "')");
-			if (!this.testMode) ga('send', 'event', props.category, props.action, props.label);
+			if (!this._testMode) ga('send', 'event', props.category, props.action, props.label);
 		}
 	}, {
 		key: 'trigger',
@@ -191,7 +187,33 @@ var gaWrapper = (function () {
 					break;
 			}
 
-			if (this.verbose || type == 2 || type == 0) console.log('gaw ' + type + ': ' + str);
+			if (this._verbose || type == 2 || type == 0) console.log('gaw ' + type + ': ' + str);
+		}
+	}, {
+		key: 'testMode',
+		value: function testMode(set) {
+			var self = this;
+			if (typeof set === 'boolean') {
+				if (set) {
+					$('*').on('click', this._preventDefault);
+					this._testMode = true;
+				} else {
+					$('*').off('click', this._preventDefault);
+					this._testMode = false;
+				}
+			}
+		}
+	}, {
+		key: 'verbose',
+		value: function verbose(set) {
+			if (typeof set === 'boolean') {
+				this._verbose = set;
+			}
+		}
+	}, {
+		key: '_preventDefault',
+		value: function _preventDefault(e) {
+			e.preventDefault();
 		}
 	}, {
 		key: '_hasAttr',
@@ -227,3 +249,5 @@ var gaWrapper = (function () {
 
 	return gaWrapper;
 })();
+
+var gaw = new gaWrapper();

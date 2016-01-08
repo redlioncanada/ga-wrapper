@@ -9,15 +9,7 @@ Check out the [example page](http://redlioncanada.github.io/ga-wrapper/) with th
 ```
 //isogram code here
 <script src="/javascript/gaWrapper.js"></script>  
-<script>var gaw = new gaWrapper();</script>
 ```
-  
-# Options  
-**testMode**  
-Boolean, disables push to analytics, disables link click navigation  
-  
-**verbose**  
-Boolean, enables verbose logging
 
 # Inline event parameters
 gaw uses a global event listener and inline data attributes to determine if a push event is necessary. Given the following code, clicking on `li` would send an event with the `category` "Featured Models", the `action` "Clicked Product Category", and the `label` "Example Product".  
@@ -107,6 +99,18 @@ action, String, the event action.
 label, String, the event label.  
   
 element, Object, the element that triggered the push.  
+  
+***gaw.testMode(set)***  
+toggles stopping of events from propagating to google analytics and disabling link click navigation
+  
+set, Boolean  
+defaults to false  
+  
+***gaw.verbose(set)***  
+toggles verbose logging  
+  
+set, Boolean  
+defaults to false  
   
 # Dependencies
 ***jQuery***
