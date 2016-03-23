@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/redlioncanada/ga-wrapper#readme",
   "devDependencies": {
+    "del": "^2.2.0",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.2.1",
     "gulp-jshint": "^1.11.2",
